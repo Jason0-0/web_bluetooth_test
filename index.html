@@ -4,14 +4,28 @@
     "test test\n"
     <button id="the-button">Try it</button>
     <script>
+        var deviceOptions = {
+        optionalServices: ['00010203-0405-0607-0809-0a0b0c0d1912', 'ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6',0xFFF0, 0x1801, 0x1800],
+        acceptAllDevices: true,
+    };
+    const hideUnknown = document.getElementById('hideUnknown').checked;
+//     const namePrefix = document.getElementById('namePrefix').value;
+//     if (hideUnknown) {
+//         deviceOptions.acceptAllDevices = false;
+//         deviceOptions.filters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz"
+//             .split("")
+//             .map((x) => ({ namePrefix: x }));
+//     } 
+//     if (namePrefix) {
+//         deviceOptions.acceptAllDevices = false;
+//         deviceOptions.filters = namePrefix.split(",")
+//             .map((x) => ({ namePrefix: x }));
+//     }
+        
                 const button = document.querySelector('#the-button');
         button.addEventListener('click', function() {
-            navigator.bluetooth.requestDevice({
-                acceptAllDevices: true,
-  optionalServices: ['battery_service'] // Required to access service later.
-})
-                }
-            }).then(device => {
+            navigator.bluetooth.requestDevice(deviceOptions)
+                .then(device => {
                 console.log('Got device:', device.name);
                 document.writeln('Got device:', device.name);
                 console.log('id:', device.id);
