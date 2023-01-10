@@ -4,8 +4,13 @@
     "test test\n"
     <button id="the-button">Try it</button>
     <script>
+        var uuid1 ,uuid2,uuid3
+        uuid1=parseInt(prompt("uuid1","0xFFFF"),16);
+        uuid2=parseInt(prompt("uuid2","0xFFFF"),16);
+        uuid3=parseInt(prompt("uuid3","0xFFFF"),16);
+
         var deviceOptions = {
-        optionalServices: ['00010203-0405-0607-0809-0a0b0c0d1912', 'ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6',0xFFF0, 0x1801, 0x1800],
+        optionalServices: ['00010203-0405-0607-0809-0a0b0c0d1912', 'ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6',uuid1, uuid2, uuid3],
         acceptAllDevices: true,
     };
 //     const hideUnknown = document.getElementById('hideUnknown').checked;
@@ -27,10 +32,18 @@
             navigator.bluetooth.requestDevice(deviceOptions)
                 .then(device => {
                 console.log('Got device:', device.name);
-                document.writeln('Got device:', device.name);
+                document.writeln('Got device<\n>:', device.name);
                 console.log('id:', device.id);
-                document.writeln('id:', device.id);
-            });
+                document.writeln('id:<\n>', device.id);   
+            })
+            .then(device=>device.gatt.connect())
+            .then(server=>{
+                return server.getPrimaryService(0xfff0);
+            })
+            // .then(charateristic=>{
+                
+            // })
+            ;
         });
     </script>
 </body>
