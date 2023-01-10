@@ -7,8 +7,9 @@
                 const button = document.querySelector('#the-button');
         button.addEventListener('click', function() {
             navigator.bluetooth.requestDevice({
-                filters: [{
-                    services: ['Generic Attribute','Generic Access']
+                acceptAllDevices: true,
+  optionalServices: ['battery_service'] // Required to access service later.
+})
                 }]
             }).then(device => {
                 console.log('Got device:', device.name);
